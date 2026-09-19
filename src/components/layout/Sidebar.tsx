@@ -47,7 +47,6 @@ export function Sidebar({ view, setView, user, mobileOpen, onClose }: SidebarPro
 
   const content = (
     <div className="flex flex-col h-full bg-slate-900">
-      {/* Brand */}
       <div className="px-5 py-5 border-b border-slate-700/60">
         <div className="flex items-center gap-2.5">
           <div className="w-7 h-7 bg-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -60,7 +59,6 @@ export function Sidebar({ view, setView, user, mobileOpen, onClose }: SidebarPro
         </div>
       </div>
 
-      {/* Role pill */}
       <div className="px-4 pt-4 pb-2">
         <div className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium
           ${user.role === "Manager" ? "bg-indigo-900/50 text-indigo-300 border border-indigo-700/50" : "bg-slate-800 text-slate-400 border border-slate-700/50"}`}>
@@ -69,7 +67,6 @@ export function Sidebar({ view, setView, user, mobileOpen, onClose }: SidebarPro
         </div>
       </div>
 
-      {/* Nav */}
       <nav className="flex-1 px-3 py-2 space-y-0.5 overflow-y-auto">
         {items.map(item => (
           <button
@@ -86,7 +83,6 @@ export function Sidebar({ view, setView, user, mobileOpen, onClose }: SidebarPro
         ))}
       </nav>
 
-      {/* User */}
       <div className="px-4 py-4 border-t border-slate-700/60">
         <div className="flex items-center gap-2.5">
           <Avatar initials={user.avatar} size="sm" />
@@ -101,10 +97,8 @@ export function Sidebar({ view, setView, user, mobileOpen, onClose }: SidebarPro
 
   return (
     <>
-      {/* Desktop */}
       <aside className="hidden md:block w-56 flex-shrink-0 h-full">{content}</aside>
 
-      {/* Mobile overlay */}
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 z-50 flex">
           <div className="absolute inset-0 bg-black/50" onClick={onClose} />

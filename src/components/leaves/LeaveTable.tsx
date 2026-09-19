@@ -36,7 +36,6 @@ export function LeaveTable({ requests, mode, onApprove, onReject, onCancel, load
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-      {/* Filters */}
       <div className="px-4 py-3 border-b border-slate-100 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-1.5">
           {statuses.map(s => (
@@ -79,7 +78,6 @@ export function LeaveTable({ requests, mode, onApprove, onReject, onCancel, load
         </div>
       </div>
 
-      {/* Table */}
       <div className="overflow-x-auto">
         {filtered.length === 0 ? (
           <div className="py-16 text-center">

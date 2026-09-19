@@ -11,7 +11,7 @@ import { LeaveCalendar } from "./views/LeaveCalendar";
 import { USERS } from "./data/mockData";
 
 export default function App() {
-  const [user, setUser] = useState<User>(USERS[0]); // Sarah Mitchell (Manager) by default
+  const [user, setUser] = useState<User>(USERS[0]);
   const [view, setView] = useState<NavView>("dashboard");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

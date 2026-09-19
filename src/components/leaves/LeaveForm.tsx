@@ -90,7 +90,6 @@ export function LeaveForm({ user, onSubmit }: LeaveFormProps) {
       </div>
 
       <form onSubmit={handleSubmit} className="p-5 space-y-5">
-        {/* Leave type */}
         <div>
           <label className="block text-xs font-semibold text-slate-600 mb-2 uppercase tracking-wide">Leave Type <span className="text-red-400">*</span></label>
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
@@ -108,7 +107,6 @@ export function LeaveForm({ user, onSubmit }: LeaveFormProps) {
           </div>
         </div>
 
-        {/* Date range */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1.5 uppercase tracking-wide">Start Date <span className="text-red-400">*</span></label>
@@ -120,7 +118,6 @@ export function LeaveForm({ user, onSubmit }: LeaveFormProps) {
           </div>
         </div>
 
-        {/* Day count preview */}
         {days > 0 && (
           <div className="flex items-center gap-3 px-4 py-3 bg-indigo-50 border border-indigo-100 rounded-lg">
             <span className="text-2xl font-bold text-indigo-700" style={{ fontFamily: "var(--font-mono)" }}>{days}</span>
@@ -131,7 +128,6 @@ export function LeaveForm({ user, onSubmit }: LeaveFormProps) {
           </div>
         )}
 
-        {/* Reason */}
         <div>
           <label className="block text-xs font-semibold text-slate-600 mb-1.5 uppercase tracking-wide">Reason <span className="text-red-400">*</span></label>
           <textarea

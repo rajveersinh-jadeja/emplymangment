@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import type { LeaveRequest, LeaveBalance, User } from "../types";
-import { fetchTeamRequests, fetchBalances, fetchMyRequests } from "../api/leaveApi";
+import { fetchTeamRequests, fetchBalances, fetchMyRequests } from "../data/mockData";
 import { StatusBadge, TypeBadge } from "../components/ui/Badge";
 import { Avatar } from "../components/ui/Avatar";
-import { BalanceCard } from "../components/leaves/BalanceCard";
 import { Spinner } from "../components/ui/Spinner";
 
 function fmt(d: string) {
@@ -59,7 +58,6 @@ export function Dashboard({ user, onNavigate }: DashboardProps) {
         </p>
       </div>
 
-  
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {user.role === "Manager" ? (
           <>
@@ -79,7 +77,6 @@ export function Dashboard({ user, onNavigate }: DashboardProps) {
       </div>
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-
         <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between">
             <h3 className="font-semibold text-slate-800 text-sm">
@@ -111,7 +108,6 @@ export function Dashboard({ user, onNavigate }: DashboardProps) {
           )}
         </div>
 
-
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between">
             <h3 className="font-semibold text-slate-800 text-sm">Leave Balance</h3>
@@ -141,7 +137,6 @@ export function Dashboard({ user, onNavigate }: DashboardProps) {
         </div>
       </div>
 
-      {/* Pending actions for manager */}
       {user.role === "Manager" && pending > 0 && (
         <div className="flex items-center gap-3 px-4 py-3.5 bg-amber-50 border border-amber-200 rounded-xl">
           <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">

@@ -1,6 +1,5 @@
-import { useState } from "react";
 import type { LeaveType, User } from "../types";
-import { submitLeaveRequest } from "../api/leaveApi";
+import { submitLeaveRequest } from "../data/mockData";
 import { LeaveForm } from "../components/leaves/LeaveForm";
 
 interface ApplyLeaveProps {

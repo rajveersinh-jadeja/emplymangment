@@ -1,4 +1,4 @@
-import type { User, LeaveRequest, LeaveBalance, LeaveType } from "../types";
+import type { User, LeaveRequest, LeaveBalance, LeaveType, ApiResponse } from "../types";
 
 export const USERS: User[] = [
   { id: "u1", name: "Sarah Mitchell", email: "sarah.mitchell@acme.com", role: "Manager", department: "Engineering", avatar: "SM" },
@@ -38,3 +38,89 @@ export const BALANCES: LeaveBalance[] = [
   { type: "Paternity", total: 14, used: 0, pending: 0, remaining: 14, color: "#0891b2", icon: "👨‍👧" },
   { type: "Unpaid", total: 30, used: 0, pending: 0, remaining: 30, color: "#64748b", icon: "💼" },
 ];
+
+let _teamRequests: LeaveRequest[] = [...LEAVE_REQUESTS];
+let _myRequests: LeaveRequest[] = [...MY_LEAVE_REQUESTS];
+let _balances: LeaveBalance[] = BALANCES.map(b => ({ ...b }));
+
+export async function fetchTeamRequests(): Promise<ApiResponse<LeaveRequest[]>> {
+  return { success: true, data: [..._teamRequests], message: "OK" };
+}
+
+export async function fetchMyRequests(): Promise<ApiResponse<LeaveRequest[]>> {
+  return { success: true, data: [..._myRequests], message: "OK" };
+}
+
+export async function fetchBalances(): Promise<ApiResponse<LeaveBalance[]>> {
+  return { success: true, data: [..._balances], message: "OK" };
+}
+
+export async function submitLeaveRequest(
+  payload: Omit<LeaveRequest, "id" | "status" | "appliedOn">
+): Promise<ApiResponse<LeaveRequest>> {
+  const newRequest: LeaveRequest = {
+    ...payload,
+    id: `lr${Date.now()}`,
+    status: "Pending",
+    appliedOn: new Date().toISOString().slice(0, 10),
+  };
+  _myRequests = [newRequest, ..._myRequests];
+  _teamRequests = [newRequest, ..._teamRequests];
+
+  _balances = _balances.map(b =>
+    b.type === payload.type ? { ...b, pending: b.pending + payload.days, remaining: b.remaining - payload.days } : b
+  );
+
+  return { success: true, data: newRequest, message: "Leave request submitted successfully" };
+}
+
+export async function approveLeave(id: string, reviewNote?: string): Promise<ApiResponse<LeaveRequest>> {
+  let updated: LeaveRequest | undefined;
+  _teamRequests = _teamRequests.map(r => {
+    if (r.id === id) {
+      updated = { ...r, status: "Approved", reviewedBy: "Sarah Mitchell", reviewedOn: new Date().toISOString().slice(0, 10), reviewNote };
+      return updated;
+    }
+    return r;
+  });
+  if (!updated) return { success: false, data: null as any, message: "Request not found" };
+  return { success: true, data: updated, message: "Leave approved" };
+}
+
+export async function rejectLeave(id: string, reviewNote?: string): Promise<ApiResponse<LeaveRequest>> {
+  let updated: LeaveRequest | undefined;
+  _teamRequests = _teamRequests.map(r => {
+    if (r.id === id) {
+      updated = { ...r, status: "Rejected", reviewedBy: "Sarah Mitchell", reviewedOn: new Date().toISOString().slice(0, 10), reviewNote };
+      return updated;
+    }
+    return r;
+  });
+  if (!updated) return { success: false, data: null as any, message: "Request not found" };
+
+  _balances = _balances.map(b =>
+    b.type === updated!.type ? { ...b, pending: Math.max(0, b.pending - updated!.days), remaining: b.remaining + updated!.days } : b
+  );
+
+  return { success: true, data: updated, message: "Leave rejected" };
+}
+
+export async function cancelLeave(id: string): Promise<ApiResponse<LeaveRequest>> {
+  let updated: LeaveRequest | undefined;
+  _myRequests = _myRequests.map(r => {
+    if (r.id === id && r.status === "Pending") {
+      updated = { ...r, status: "Cancelled" };
+      return updated;
+    }
+    return r;
+  });
+  _teamRequests = _teamRequests.map(r => (r.id === id ? { ...r, status: "Cancelled" } : r));
+
+  if (!updated) return { success: false, data: null as any, message: "Cannot cancel this request" };
+
+  _balances = _balances.map(b =>
+    b.type === updated!.type ? { ...b, pending: Math.max(0, b.pending - updated!.days), remaining: b.remaining + updated!.days } : b
+  );
+
+  return { success: true, data: updated, message: "Request cancelled" };
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { LeaveRequest } from "../types";
-import { fetchTeamRequests, approveLeave, rejectLeave } from "../api/leaveApi";
+import { fetchTeamRequests, approveLeave, rejectLeave } from "../data/mockData";
 import { LeaveTable } from "../components/leaves/LeaveTable";
 import { Spinner } from "../components/ui/Spinner";
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { LeaveRequest } from "../types";
-import { fetchTeamRequests } from "../api/leaveApi";
+import { fetchTeamRequests } from "../data/mockData";
 import { Avatar } from "../components/ui/Avatar";
 import { TypeBadge } from "../components/ui/Badge";
 import { Spinner } from "../components/ui/Spinner";
@@ -16,7 +16,7 @@ function pad(n: number) { return String(n).padStart(2, "0"); }
 export function LeaveCalendar() {
   const [requests, setRequests] = useState<LeaveRequest[]>([]);
   const [loading, setLoading] = useState(true);
-  const [month, setMonth] = useState(new Date(2026, 8)); // Sept 2026
+  const [month, setMonth] = useState(new Date(2026, 8));
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
   useEffect(() => {
@@ -49,7 +49,6 @@ export function LeaveCalendar() {
       </div>
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-        {/* Calendar grid */}
         <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between">
             <button
@@ -110,7 +109,6 @@ export function LeaveCalendar() {
           </div>
         </div>
 
-        {/* Side panel */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-5 py-3.5 border-b border-slate-100">
             <h3 className="font-semibold text-slate-800 text-sm">

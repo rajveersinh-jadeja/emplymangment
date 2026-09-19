@@ -31,7 +31,6 @@ export function Header({ view, user, onMenuClick, onRoleSwitch }: HeaderProps) {
 
   return (
     <header className="h-14 bg-white border-b border-slate-200 flex items-center px-4 gap-3 flex-shrink-0">
-      {/* Mobile menu button */}
       <button
         onClick={onMenuClick}
         className="md:hidden p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
@@ -46,7 +45,6 @@ export function Header({ view, user, onMenuClick, onRoleSwitch }: HeaderProps) {
         {VIEW_TITLES[view] ?? "LeavePro"}
       </h1>
 
-      {/* Role switcher */}
       <div className="flex items-center gap-2">
         <label className="text-xs text-slate-400 hidden sm:block">View as:</label>
         <select
